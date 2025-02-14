@@ -185,3 +185,8 @@ compile_commands.json
 
 # Eclipse generated file for annotation processors
 .factorypath
+
+
+
+# Scott's crap
+src/main/deploy/neo/
