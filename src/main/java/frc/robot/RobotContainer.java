@@ -191,7 +191,7 @@ public class RobotContainer {
     () -> {
       m_climber.stop();
     }, m_climber));
-
+    /*
     m_shootAmpButton.whileTrue(new StartEndCommand(() -> {
       m_shooter.shootAmp();
     },
@@ -223,11 +223,12 @@ public class RobotContainer {
     () -> {
       m_shooter.stop();
     }));
-
+    */
+     
     m_resetFieldRelativeButton.onTrue(new InstantCommand(() -> {
       m_swerve.resetFieldRelative();
     }));
-
+    
     m_aimButton.whileTrue(aimArmContinuous);
 
     m_armAutoAimAdjustUpButton.onTrue(new InstantCommand(() -> {
