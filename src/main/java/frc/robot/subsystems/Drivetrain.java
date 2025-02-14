@@ -11,14 +11,14 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import java.io.File;
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.AutoBuilderException;
+//import com.pathplanner.lib.auto.AutoBuilderException;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.AutonConstants;
+//import frc.robot.Constants.AutonConstants;
 import swervelib.SwerveDrive;
 import swervelib.SwerveModule;
 import swervelib.parser.SwerveParser;
@@ -107,7 +107,7 @@ public class Drivetrain extends SubsystemBase {
         ySpeed * swerveDrive.getMaximumChassisVelocity()
       ),
       rot * swerveDrive.getMaximumChassisAngularVelocity(),
-      false,
+      true,
       false
     );
   }
