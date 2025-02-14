@@ -107,7 +107,7 @@ public class Drivetrain extends SubsystemBase {
         ySpeed * swerveDrive.getMaximumChassisVelocity()
       ),
       rot * swerveDrive.getMaximumChassisAngularVelocity(),
-      true,
+      false,
       false
     );
   }
