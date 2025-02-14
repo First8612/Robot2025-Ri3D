@@ -26,7 +26,7 @@ public class Arm extends SubsystemBase {
     // be careful setting this to low (slow) because it also prevents slowing down.
     private SlewRateLimiter m_rateLimiter = new SlewRateLimiter(6);
 
-    private final double MAX_SETPOINT = 45;
+    private final double MAX_SETPOINT = 26;
     private final double AIM_ADJUSTMENT = 0.05;
 
 
@@ -97,7 +97,7 @@ public class Arm extends SubsystemBase {
         if (!m_stopped) {
             var position = m_armEncoder.getPosition();
             var speed = m_positionController.calculate(position);
-            speed = MathUtil.clamp(speed, -1, 1);
+            speed = MathUtil.clamp(speed, -.25, 0.5);
             speed = m_rateLimiter.calculate(speed);
 
             if ((position < 8 && speed < 0) || (position > 42 && speed > 0)) {
