@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.subsystems.*;
+import swervelib.imu.NavXSwerve;
 import frc.robot.commands.*;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -202,28 +203,28 @@ public class RobotContainer {
     m_shooterPrepButton.whileTrue(shooterPrep);
 
     m_shootSpeakerButton.onTrue(shootSpeaker);
-
+    */
     m_feedOnlyButton.whileTrue(new StartEndCommand(() -> {
       m_shooter.feedOnly();
     },
     () -> {
       m_shooter.stop();
     }));
-
+    /*
     m_shootOnlyButton.whileTrue(new StartEndCommand(() -> {
       m_shooter.shootSpeakerOnly();
     },
     () -> {
       m_shooter.stop();
     }));
-
+    */
      m_backfeedButton.whileTrue(new StartEndCommand(() -> {
       m_shooter.backfeed();
     },
     () -> {
       m_shooter.stop();
     }));
-    */
+    
      
     m_resetFieldRelativeButton.onTrue(new InstantCommand(() -> {
       m_swerve.resetFieldRelative();
@@ -318,7 +319,7 @@ public class RobotContainer {
     } else {
       m_greenRelay.set(false);
     }
-
     SmartDashboard.putNumber("Arm/Auto Aim Setpoint", m_armAimHelper.getArmSetpoint(m_tagLimelight).getFirst());
+    //SmartDashboard.putNumber("NavXSwerve", NavXSwerve);
   }
 }
