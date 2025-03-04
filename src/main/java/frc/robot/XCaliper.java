@@ -15,10 +15,14 @@ public class XCaliper extends TimedRobot {
 
   public void robotInit() {
     m_robotContainer = new RobotContainer();
-
+    PortForwarder.add(5800, "photonvision.local", 5800);
+    PortForwarder.add(5800, "photonvision1.local", 5800);
+    PortForwarder.add(5800, "photonvision2.local", 5800);
+    
+    /* 
     for (int port = 5800; port <= 5801; port++) {
       PortForwarder.add(port, "limelight-tags.local", port);
-    }
+    }*/
 
     for (int port = 5802; port <= 5804; port++) {
       PortForwarder.add(port, "limelight-notes.local", port - 2);

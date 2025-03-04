@@ -4,10 +4,13 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import java.io.File;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -160,5 +163,9 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     swerveDrive.getModules()[0].getAngleMotor().getPosition();
   }
+
+public void addVisionMeasurement(Pose2d pose2d, double timestampSeconds, Matrix<N3, N1> estStdDevs) {
+  this.swerveDrive.addVisionMeasurement(pose2d, timestampSeconds, estStdDevs);
+}
 }
  

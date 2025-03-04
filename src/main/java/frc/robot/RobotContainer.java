@@ -13,6 +13,7 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.math.MathUtil;
 // import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -25,6 +26,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -62,6 +65,10 @@ public class RobotContainer {
   //LED relays
   private DigitalOutput m_greenRelay = new DigitalOutput(2);
 
+  //PhotonVision
+  private PhotonVision photonVision = new PhotonVision();
+  private final Field2d field = new Field2d();
+
   //Controllers
   private final XboxController m_driverController = new XboxController(0);
   private final XboxController m_operatorController = new XboxController(1);
@@ -92,7 +99,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
-
+    SmartDashboard.putData(field);
     //Commands for PathPlanner
     NamedCommands.registerCommand("stopModules", new InstantCommand(() -> {m_swerve.stopModules();}));
     NamedCommands.registerCommand("stopSystems", stopSystems);
@@ -320,6 +327,21 @@ public class RobotContainer {
       m_greenRelay.set(false);
     }
     SmartDashboard.putNumber("Arm/Auto Aim Setpoint", m_armAimHelper.getArmSetpoint(m_tagLimelight).getFirst());
-    //SmartDashboard.putNumber("NavXSwerve", NavXSwerve);
+    SmartDashboard.putNumberArray("LHPose", LimelightHelpers.getBotPose_wpiBlue("limelight"));
+        var visionEst = photonVision.getEstimatedGlobalPose();
+        visionEst.ifPresent(
+                est -> {
+                    // Change our trust in the measurement based on the tags we can see
+                    var estStdDevs = photonVision.getEstimationStdDevs();
+
+                    
+    
+                    m_swerve.addVisionMeasurement(
+                            est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
+                    
+                    field.getObject("Photon Vision").setPose(est.estimatedPose.toPose2d());
+                    field.getObject("Swerve").setPose(m_swerve.getPose());
+
+                });
   }
 }
